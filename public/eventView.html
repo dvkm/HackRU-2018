@@ -3,21 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <title>EVENT</title>
-    <style>
-        body {background-color: #fcfbf8}
-    </style>
+
     <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
     <script
             src="https://code.jquery.com/jquery-3.1.1.min.js"
             integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
             crossorigin="anonymous"></script>
     <script src="semantic/dist/semantic.min.js"></script>
+
+    <style>
+        body {background-color: #7399C6}
+        img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+
+    <meta name="viewport" content="initial-scale=1.0,
+      width=device-width" />
+    <script src="http://js.api.here.com/v3/3.0/mapsjs-core.js"
+            type="text/javascript" charset="utf-8"></script>
+    <script src="http://js.api.here.com/v3/3.0/mapsjs-service.js"
+            type="text/javascript" charset="utf-8"></script>
+    <script src="http://js.api.here.com/v3/3.0/mapsjs-ui.js"
+            type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" charset="UTF-8"
+            src="http://js.api.here.com/v3/3.0/mapsjs-places.js"></script>
+    <link rel="stylesheet" type="text/css"
+          href="http://js.api.here.com/v3/3.0/mapsjs-ui.css" />
 </head>
 <body>
     <div class = "ui main container">
         <h2 class = "ui dividing header">
-            "EVENT TITLE"
+            EVENT TITLE
         </h2>
+        <img src ="https://denovo-us.com/wp-content/uploads/2018/05/Male-Generic-Photo-01-e1526490708781.jpg">
+        <div class = "ui segment">
+            <a href = "TIME" target = "_blank"> DATE, at TIME</a>
+        </div>
     </div>
+
+    <div id="map" style="width: 720px; height: 360px; display: block; margin-left: auto; margin-right: auto;"></div>
+    <script type="text/javascript" charset="utf-8">
+        // Instantiate the Platform class with authentication and
+        // authorization credentials:
+        var platform = new H.service.Platform({
+            app_id: 'KjBANv8yGL5zTmlbuqGS',
+            app_code: 'iNHwA4y7ptLczD_m1wwZ2A'
+        });
+
+        // Instantiate a map inside the DOM element with id map. The
+        // map center is in San Francisco, the zoom level is 10:
+        var coords = {lat: 40.500601, lng: -74.449002};
+
+        var svgIcon = '<svg width="24" height="24" ' +
+            'xmlns="http://www.w3.org/2000/svg">' +
+            '<rect stroke="white" fill="#1b468d" x="1" y="1" width="22" ' +
+            'height="22" /><text x="12" y="18" font-size="12pt" ' +
+            'font-family="Arial" font-weight="bold" text-anchor="middle" ' +
+            'fill="white"> </text></svg>';
+        var map = new H.Map(document.getElementById('map'),
+            platform.createDefaultLayers().normal.map, {
+                center: coords,
+                zoom: 15
+            });
+
+       var icon = new H.map.Icon(svgIcon),
+        marker = new H.map.Marker(coords, {icon: icon});
+
+       map.addObject(marker);
+
+    </script>
 </body>
 </html>
