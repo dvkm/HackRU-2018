@@ -76,3 +76,5 @@ typings/
 
 .firebaserc
 .idea
+
+\.DS_Store
