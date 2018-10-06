@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Event Creation Form</title>
+    <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
+    <script
+            src="https://code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+            crossorigin="anonymous"></script>
+    <script src="semantic/dist/semantic.min.js"></script>
+    <style>
+        body {background-color: #fcfbf8}
+    </style>
+</head>
+<style>
+    form {
+        margin:30px 50px;
+
+    }
+</style>
+<body>
+    <form class = "ui form">
+        <h1 style = "color:darkred;font-family:'Corbel';">Create an Event</h1>
+        <div class = field>
+            <label>Event Name</label>
+            <input type="text" name="event-name" placeholder="Event Name">
+        </div>
+        <div class = field>
+            <label>Event Date</label>
+            <input type="text" name="date" placeholder="MM/DD/YYYY">
+        </div>
+        <div class = field>
+            <label>Event Time</label>
+            <input type="text" name="event-name" placeholder="##:## AM/PM - ##:## AM/PM">
+        </div>
+        <div class = field>
+            <label>Event Location</label>
+            <input type="text" name="location" placeholder="## Address St, City, State ZIP##">
+        </div>
+        <div class = field>
+            <label>Event Description</label>
+            <input type="text" name="description" placeholder="Description of Event">
+        </div>
+        <button class = "ui button" style ="border:2px solid darkred;background-color:lightpink;">
+            Submit
+        </button>
+    </form>
+</body>
+</html>
