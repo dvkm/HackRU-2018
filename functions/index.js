@@ -2,8 +2,7 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 
 const config = functions.config().firebase
-admin.initializeApp(config);
-
+const firebase = admin.initializeApp(config);
 
 var createError = require('http-errors');
 var express = require('express');
@@ -30,6 +29,20 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(lessMiddleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+var user = firebase.auth().user;
+if (user != null) {
+    user.providerData.forEach(function (profile) {
+        console.log("Sign-in provider: " + profile.providerId);
+        console.log("  Provider-specific UID: " + profile.uid);
+        console.log("  Name: " + profile.displayName);
+        console.log("  Email: " + profile.email);
+        console.log("  Photo URL: " + profile.photoURL);
+    });
+} else {
+    console.log("USER NULL");
+}
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -58,3 +71,4 @@ app.use(function(err, req, res, next) {
 // https://firebase.google.com/docs/functions/write-firebase-functions
 
 exports.app = functions.https.onRequest(app);
+

@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/dvkm/HackRU-2018#readme",
   "dependencies": {
+    "firebaseui": "^3.4.1",
     "semantic-ui": "^2.4.0"
   }
 }
