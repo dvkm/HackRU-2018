@@ -4,6 +4,8 @@ const admin = require('firebase-admin');
 const config = functions.config().firebase
 const firebase = admin.initializeApp(config);
 
+global.firebase = firebase;
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -16,6 +18,9 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var homeRouter = require('./routes/home');
+var applicationRouter = require('./routes/application');
+var eventRouter = require('./routes/event');
 
 var app = express();
 
@@ -44,8 +49,10 @@ if (user != null) {
     console.log("USER NULL");
 }
 
-app.use('/', indexRouter);
+app.use('/', homeRouter);
 app.use('/users', usersRouter);
+app.use('/event/:action/:id?', eventRouter);
+app.use('/app', applicationRouter);
 app.use('/*', indexRouter);
 
 // catch 404 and forward to error handler
