@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include includes/config %>
+    <style>
+        body {background-color: #fcfbf8}
+    </style>
+    <script>
+        function uuidv4() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+        var db = firebase.firestore();
+        db.settings({
+            timestampsInSnapshots: true
+        });
+    </script>
+</head>
+<style>
+    body {
+        margin:30px 50px;
+
+    }
+</style>
+<body>
+<form class = "ui form">
+    <h1 style = "color:darkred;font-family:'Corbel';">Create an Event</h1>
+    <div class="field">
+        <label>Event Name</label>
+        <input type="text" id="event-name" name="event-name" placeholder="Event Name">
+    </div>
+    <div class="field">
+        <label>Event Date</label>
+        <input type="date" id="event-date" name="date" placeholder="MM/DD/YYYY">
+    </div>
+    <div class="field">
+        <label>Event Time</label>
+        <input type="time" id="event-time" name="event-time" placeholder="">
+    </div>
+    <div class="field">
+        <label>Event Location</label>
+        <input type="text" id="event-location" name="location" placeholder="## Address St, City, State ZIP##">
+    </div>
+    <div class="field">
+        <label>Event Description</label>
+        <input type="text" id="event-description" name="description" placeholder="Description of Event">
+    </div>
+    <div id="filesubmit">
+        <input type="file" class="file-select" accept="image/*"/>
+    </div>
+
+    <!--
+    Still needs picture submission component of form (file picker?)
+    -->
+
+</form>
+<div>
+    <button class = "file-upload" onclick="handleFileUploadSubmit()" style ="border:2px solid darkred;background-color:lightpink;">
+        Submit
+    </button>
+</div>
+<script>
+    const storageService = firebase.storage();
+    const storageRef = storageService.ref();
+    document.querySelector('.file-select').addEventListener('change', handleFileUploadChange);
+    // document.querySelector('.submit').addEventListener('onclick', handleFileUploadSubmit);
+    let selectedFile;
+    function handleFileUploadChange(e) {
+        selectedFile = e.target.files[0];
+
+        console.log(selectedFile);
+    }
+    function handleFileUploadSubmit() {
+        // e.preventDefault();
+        console.log("hi");
+        const uuid = uuidv4();
+        const uploadTask = storageRef.child(`images/${uuid}`).put(selectedFile); //create a child directory called images, and place the file inside this directory
+        uploadTask.on('state_changed', (snapshot) => {
+            // Observe state change events such as progress, pause, and resume
+        }, (error) => {
+            // Handle unsuccessful uploads
+            console.log(error);
+        }, () => {
+            // Upload completed successfully, now we can get the download URL
+            uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+                console.log('File available at', downloadURL);
+            });
+        });
+        var title = $("#talkTitle").val();
+        var presenter = $("#talkPresenter").val();
+        var link = $("#talkLink").val();
+
+        // Push a new recommendation to the database using those values
+        db.collection("events").doc(uuid).set({
+            name: $("#event-name").val(),
+            timestamp: Date.parse(new Date($("#event-date").val() + " "+ $("#event-time").val())),
+            location: $("#event-location").val(),
+            description: $("#event-description").val()
+        })
+            .then(function(docRef) {
+                console.log("Document written with ID: ", docRef.id);
+            })
+            .catch(function(error) {
+                console.error("Error adding document: ", error);
+            });
+
+    }
+</script>
+</body>
+</html>
