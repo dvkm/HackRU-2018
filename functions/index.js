@@ -51,7 +51,7 @@ if (user != null) {
 
 app.use('/', homeRouter);
 app.use('/users', usersRouter);
-app.use('/event/:action/:id?', eventRouter);
+app.use('/event/:action/:id?/:detail?', eventRouter);
 app.use('/app', applicationRouter);
 app.use('/*', indexRouter);
 

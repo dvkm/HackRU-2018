@@ -10,8 +10,10 @@
     "logs": "firebase functions:log"
   },
   "dependencies": {
+    "algoliasearch": "^3.30.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
+    "dotenv": "^6.0.0",
     "ejs": "~2.5.7",
     "express": "~4.16.0",
     "firebase": "^5.5.3",

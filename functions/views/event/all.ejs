@@ -1,0 +1,45 @@
+<head>
+
+    <% include ../includes/config %>
+</head>
+<% include ../includes/header %>
+<div class="ui grid">
+<div class = "ui cards">
+<% for(var i=0; i<data.length; i++) {%>
+    <a class="ui raised link card" href="<%= data[i].detail %>"> <!-- one card -->
+        <div class="content">
+            <div class="header">
+                <%= data[i].name %>
+            </div>
+            <div class = "image">
+                <img width = "260px" src="<%= data[i].image %>">
+            </div>
+            <div class="meta">
+                <%= data[i].date %> <!-- Saturday 9/25, at 6:20 PM-->
+                <div class = "ui fitted divider"></div>
+                <%= data[i].location %>
+            </div>
+            <div class = "ui segment">
+                <div class="description">
+                    <%= data[i].description %>
+                </div>
+            </div>
+
+            <i class="comment icon"></i>
+            4 comments
+        </div>
+        <div class="extra content">
+            <span class="left floated like">
+              <i class="like icon"></i>
+              Like
+            </span>
+            <span class="right floated star">
+              <i class="star icon"></i>
+              Favorite
+            </span>
+        </div>
+    </a>
+<% } %>
+</div>
+    <% include ../includes/footer %>
+</div>

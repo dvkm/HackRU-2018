@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%= name %></title>
+
+    <% include ../includes/config %>
+
+    <style>
+        body {background-color: #fcfbf8}
+        img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
+
+    <meta name="viewport" content="initial-scale=1.0,
+      width=device-width" />
+    <script src="http://js.api.here.com/v3/3.0/mapsjs-core.js"
+            type="text/javascript" charset="utf-8"></script>
+    <script src="http://js.api.here.com/v3/3.0/mapsjs-service.js"
+            type="text/javascript" charset="utf-8"></script>
+    <script src="http://js.api.here.com/v3/3.0/mapsjs-ui.js"
+            type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" charset="UTF-8"
+            src="http://js.api.here.com/v3/3.0/mapsjs-places.js"></script>
+    <link rel="stylesheet" type="text/css"
+          href="http://js.api.here.com/v3/3.0/mapsjs-ui.css" />
+</head>
+<body>
+<% include ../includes/header %>
+<div class="ui grid">
+    <div class = "ui main container">
+        <br/>
+        <h2 class = "ui dividing header">
+            <%= name %>
+        </h2>
+        <img src ="<%= image %>">
+        <div class = "ui segment">
+            <a href = "TIME" target = "_blank"><%= date %></a> <!-- CHANGE THIS TIME -->
+        </div>
+        <div class="ui segment">
+            <a href = "ADDRESS" target = "_blank"><%= location %></a> <!-- CHANGE THIS ADDRESS -->
+        </div>
+        <div class="ui segment">
+            <%= description %>
+        </div>
+    </div>
+
+    <div id="map" style="width: 720px; height: 360px; display: block; margin-left: auto; margin-right: auto;"></div>
+</div>
+
+<div class="ui comments">
+    <h3 class="ui dividing header">Comments</h3>
+    <div class="comment">
+        <div class="content">
+            <a class="author">David</a>
+            <div class="metadata">
+                <span class="date">Today at 5:42PM</span>
+            </div>
+            <div class="text">
+                How artistic!
+            </div>
+            <div class="actions">
+                <a class="reply">Reply</a>
+            </div>
+        </div>
+    </div>
+    <div class="comment">
+        <div class="content">
+            <a class="author">Steven</a>
+            <div class="metadata">
+                <span class="date">Yesterday at 12:30AM</span>
+            </div>
+            <div class="text">
+                <p>This has been very useful for my research. Thanks as well!</p>
+            </div>
+            <div class="actions">
+                <a class="reply">Reply</a>
+            </div>
+        </div>
+        <div class="comments">
+            <div class="comment">
+                <div class="content">
+                    <a class="author">Daniel</a>
+                    <div class="metadata">
+                        <span class="date">Just now</span>
+                    </div>
+                    <div class="text">
+                        Elliot you are always so right :)
+                    </div>
+                    <div class="actions">
+                        <a class="reply">Reply</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="comment">
+        <div class="content">
+            <a class="author">Victor</a>
+            <div class="metadata">
+                <span class="date">5 days ago</span>
+            </div>
+            <div class="text">
+                Dude, this is awesome. Thanks so much
+            </div>
+            <div class="actions">
+                <a class="reply">Reply</a>
+            </div>
+        </div>
+    </div>
+    <form class="ui reply form">
+        <div class="field">
+            <textarea></textarea>
+        </div>
+        <div class="ui blue labeled submit icon button">
+            <i class="icon edit"></i> Add Reply
+        </div>
+    </form>
+</div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+    // Instantiate the Platform class with authentication and
+    // authorization credentials:
+    var platform = new H.service.Platform({
+        app_id: 'KjBANv8yGL5zTmlbuqGS',
+        app_code: 'iNHwA4y7ptLczD_m1wwZ2A'
+    });
+
+    // Instantiate a map inside the DOM element with id map. The
+    // map center is in San Francisco, the zoom level is 10:
+    var geocodingParams = {
+        searchText: '<%= location %>'
+    };
+
+    // Define a callback function to process the geocoding response:
+    var onResult = function(result) {
+        var locations = result.Response.View[0].Result,
+            position,
+            marker;
+        var coords = {lat: locations[0].Location.DisplayPosition.Latitude, lng: locations[0].Location.DisplayPosition.Longitude}; // CHANGE THIS LOCATION
+
+        var svgIcon = '<svg width="24" height="24" ' +
+            'xmlns="http://www.w3.org/2000/svg">' +
+            ' <circle stroke = "black" stroke-width = "2" fill = "#cd5c5c" cx = "12" cy = "12" r = "10"/><text x="12.5" y="14.5" font-size="30pt" ' +
+            'font-family="Arial" font-weight="bold" text-anchor="middle" ' +
+            'fill="black"> . </text></svg>';
+        var map = new H.Map(document.getElementById('map'),
+            platform.createDefaultLayers().normal.map, {
+                center: coords,
+                zoom: 15
+            });
+
+        var icon = new H.map.Icon(svgIcon),
+            marker = new H.map.Marker(coords, {icon: icon});
+
+        map.addObject(marker);
+    }
+
+    var geocoder = platform.getGeocodingService();
+
+    // Call the geocode method with the geocoding parameters,
+    // the callback and an error callback function (called if a
+    // communication error occurs):
+    geocoder.geocode(geocodingParams, onResult, function(e) {
+        alert(e);
+    });
+
+
+
+</script>
+<% include ../includes/footer %>
+</body>
+</html>

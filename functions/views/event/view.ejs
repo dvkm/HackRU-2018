@@ -1,23 +1,19 @@
-<head>
-
-    <% include ../includes/config %>
-</head>
 <div class = "ui cards">
     <div class="ui raised card"> <!-- one card -->
         <div class="content">
-            <a class="header" href = "LINK">
+            <a class="header" href = "<%= detail %>">
                 <%= name %>
             </a>
-            <a class = "image" href = "LINK">
+            <a class = "image" href = "<%= detail %>">
                 <img width = "260px" src="<%= image %>">
             </a>
-            <a class="meta" href = "LINK">
+            <a class="meta" href = "<%= detail %>">
                 <%= date %> <!-- Saturday 9/25, at 6:20 PM-->
                 <div class = "ui fitted divider"></div>
                 <%= location %>
             </a>
             <div class = "ui segment">
-                <a class="description" href = "LINK">
+                <a class="description" href = "<%= detail %>">
                     <%= description %>
                 </a>
             </div>

@@ -1,0 +1,15 @@
+<div class="ui menu">
+    <div class="header item">
+        <a href="/">Plannery</a>
+    </div>
+    <a href="/event/view/all" class="item">
+        Events
+    </a>
+    <a href="/event/new" class="item">
+        Create a new event
+    </a>
+    <div class="right menu">
+        <div id="login" onclick="$('.ui.modal').modal('show');" class="ui primary button">Log in</div>
+        <div style="display: none;" id="logout" onclick="firebase.auth().signOut();" class="ui primary button">Log out</div>
+    </div>
+</div>

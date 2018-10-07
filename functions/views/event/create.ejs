@@ -18,49 +18,55 @@
         });
     </script>
 </head>
-<style>
-    body {
-        margin:30px 50px;
+<!--<style>-->
+    <!--body {-->
+        <!--margin:30px 50px;-->
 
-    }
-</style>
+    <!--}-->
+<!--</style>-->
 <body>
-<form class = "ui form">
-    <h1 style = "color:darkred;font-family:'Corbel';">Create an Event</h1>
-    <div class="field">
-        <label>Event Name</label>
-        <input type="text" id="event-name" name="event-name" placeholder="Event Name">
-    </div>
-    <div class="field">
-        <label>Event Date</label>
-        <input type="date" id="event-date" name="date" placeholder="MM/DD/YYYY">
-    </div>
-    <div class="field">
-        <label>Event Time</label>
-        <input type="time" id="event-time" name="event-time" placeholder="">
-    </div>
-    <div class="field">
-        <label>Event Location</label>
-        <input type="text" id="event-location" name="location" placeholder="## Address St, City, State ZIP##">
-    </div>
-    <div class="field">
-        <label>Event Description</label>
-        <input type="text" id="event-description" name="description" placeholder="Description of Event">
-    </div>
-    <div id="filesubmit">
-        <input type="file" class="file-select" accept="image/*"/>
-    </div>
+<% include ../includes/header %>
+<!--<div class="ui grid">-->
+    <div class = "ui form">
+        <h1>Create an Event</h1>
+        <div class="field">
+            <label>First Name</label>
+            <input type="text" name="first-name" placeholder="First Name">
+        </div>
+        <div class="field">
+            <label>Event Name</label>
+            <input type="text" id="event-name" name="event-name" placeholder="Event Name">
+        </div>
+        <div class="field">
+            <label>Event Date</label>
+            <input type="date" id="event-date" name="date" placeholder="MM/DD/YYYY">
+        </div>
+        <div class="field">
+            <label>Event Time</label>
+            <input type="time" id="event-time" name="event-time" placeholder="">
+        </div>
+        <div class="field">
+            <label>Event Location</label>
+            <input type="text" id="event-location" name="location" placeholder="## Address St, City, State ZIP##">
+        </div>
+        <div class="field">
+            <label>Event Description</label>
+            <input type="text" id="event-description" name="description" placeholder="Description of Event">
+        </div>
+        <div id="filesubmit">
+            <input type="file" class="file-select" accept="image/*"/>
+            <!--<img id="blah" src="#" alt="your image" />-->
+        </div>
 
-    <!--
-    Still needs picture submission component of form (file picker?)
-    -->
 
-</form>
-<div>
-    <button class = "file-upload" onclick="handleFileUploadSubmit()" style ="border:2px solid darkred;background-color:lightpink;">
-        Submit
-    </button>
-</div>
+        <div>
+            <button class = "file-upload" onclick="handleFileUploadSubmit()">
+                Submit
+            </button>
+        </div>
+
+    </div>
+<!--</div>-->
 <script>
     const storageService = firebase.storage();
     const storageRef = storageService.ref();
@@ -74,7 +80,6 @@
     }
     function handleFileUploadSubmit() {
         // e.preventDefault();
-        console.log("hi");
         const uuid = uuidv4();
         const uploadTask = storageRef.child(`images/${uuid}`).put(selectedFile); //create a child directory called images, and place the file inside this directory
         uploadTask.on('state_changed', (snapshot) => {
@@ -105,8 +110,10 @@
         .catch(function(error) {
             console.error("Error adding document: ", error);
         });
+        document.location="/event/view/" + uuid;
 
     }
 </script>
+<% include ../includes/footer %>
 </body>
 </html>
